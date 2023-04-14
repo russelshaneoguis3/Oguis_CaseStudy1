@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -24,24 +24,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 console.log(app)
 
-const googleSignInBtn = document.querySelector('.google-sign-in');
-const provider = new GoogleAuthProvider();
-const auth = getAuth(app);
-
-googleSignInBtn.addEventListener('click', () => {
-signInWithPopup(auth, provider).then((result) => {
-  const user = result.user;
-  alert(` Hello ${user.displayName}!`);
-  window.location.href = "index.html";
-
-}).catch((error) => {
-  const errorMessage = error.message;
-  alert(`Can't Login: ${errorMessage}`)
-});
-
-});
-
-const db = getFirestore();
+const db = getFirestore(app);
 
 const saveBtn = document.querySelector(".save")
 saveBtn.addEventListener("click", async () => {
@@ -52,4 +35,27 @@ saveBtn.addEventListener("click", async () => {
         version: "14"
     });
     console.log(`Created new Gadget: ${newGadget.id }`)
-})
+});
+
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+const googleSignInBtn = document.querySelector('.google-sign-in');
+
+googleSignInBtn.addEventListener('click', () => {
+signInWithPopup(auth, provider).then((result) => {
+  const user = result.user;
+  alert(` Hello ${user.displayName}!`);
+  window.location.href = "home.html";
+
+}).catch((error) => {
+  const errorMessage = error.message;
+  alert(`Can't Login: ${errorMessage}`)
+});
+
+});
+
+
+
+
+
+

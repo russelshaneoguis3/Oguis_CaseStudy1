@@ -4,10 +4,150 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Oguis, Adam</title>
     <script defer src="./bundle.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+  
 </head>
+<link rel="shortcut icon" type="x-icon" href="sml.png">
+
+<style>
+
+  body  {
+  	background-image: url("pangwall.jpg");
+	height: 100vh;
+	background-position: center;
+ 	background-repeat: no-repeat;
+  	background-size: cover;
+	}
+
+#box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    background-color: rgb(233, 218, 150);
+    width: 300px;
+    padding: 20px;
+    box-shadow: 30px 30px 300px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+   }
+
+   .google-sign-in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffff;
+  border: 2px solid #ffff;
+  color: #4285F4;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 10px;
+  border-radius: 1px;
+}
+
+.google-sign-in img {
+  height: 20px;
+  margin-right: 0.1px;
+}
+
+.google-sign-in:hover {
+  background-color: rgb(233, 218, 150);
+  color: rgb(233, 218, 150);
+}
+
+.icon {
+  margin-right: 10px;
+}
+.icon i {
+  font-size: 20px;
+  color: #4285F4;
+}
+</style>
+
 <body>
-    <button class="save">Save</button>
+
+    <div id ="box">
+        <form name="login_form" id="login_form" method="post" action="#" enctype="multipart/form-data" >
+            <div style="font-size: 20px;margin: 0px;color: black;"><b>Login Here</b></div><br>
+              <div class="form-group">
+                <label for="email"><b>Email: </b></label>
+                <input type="text" name="login_email" id="login_email" class="form-control" placeholder="Enter your email"><br>
+              </div>
+              
+              <div class="form-group">
+                <label for="password"><b>Password: </b></label>
+                <input type="password" name="login_password" id="login_password" class="form-control"  placeholder="Enter your password"><br>
+              </div>
+              <button type="button" id="login" name="login" class="btn btn-success">Login</button>
+              <br>
+              </form>
+_______________________________________
+              <div>
+                Login with:<button class = "google-sign-in"><img src="google-logo.png" alt="Google Logo" /> </button></div>
+_______________________________________ 
+<br><br>
+                <a style = "color: black" href="register.html">Click here to register ← </a>
+    
+    </div>
 </body>
 </html>
+
+<script type="module">
+
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyDgcNdax5aV8EVk9hhpSeqyk0100brXrFM",
+        authDomain: "oguisadam-lab.firebaseapp.com",
+        projectId: "oguisadam-lab",
+        storageBucket: "oguisadam-lab.appspot.com",
+        messagingSenderId: "47320592417",
+        appId: "1:47320592417:web:1e871ea30b701c29e03360",
+        measurementId: "G-N8QV73QPNH"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+    console.log(app);
+    
+    
+    //----- Login code start	  
+    document.getElementById("login").addEventListener("click", function() {
+      var email =  document.getElementById("login_email").value;
+      var password = document.getElementById("login_password").value;
+    
+      signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(user);
+        alert(user.email+" \n \n Login successful !");
+        window.location.replace("home.html");
+       
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        alert(errorMessage);
+      });		  		  
+    });
+    //----- End
+    </script>
