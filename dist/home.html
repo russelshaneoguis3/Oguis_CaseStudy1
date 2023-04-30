@@ -4,18 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oguis, Adam</title>
+    <title>Oguis, Adam Russel Shane</title>
     <script defer src="./bundle.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-  
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+
+      <!-- sweetalert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+    
+
+<!-- Data From Firebase to DataTables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    
 </head>
 
 <link rel="shortcut icon" type="x-icon" href="sml.png">
 
 <style>
+
+body {
+  background-image: url("cornbeef19.jpg");
+	height: 145vh;
+	background-position: center;
+ 	background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+}
+
 
 .btn-secondary.active,
 .btn-secondary:active,
@@ -30,36 +62,143 @@
   border-color: #dc3545;
 }
 
+th {
+      background-color: #eac2f1;
+      color: #000000;
+      text-transform: uppercase;
+      padding: 10px;
+      text-align: left;
+  }
+
+tbody {
+    background-color: #f8f9fa;
+}
+
+.card {
+
+    width: 1200px;
+    height: 780px;
+    margin: 20px auto;
+  
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border-radius: 20px;
+    border:1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.navbar {
+  background: rgb(144,231,238);
+  background: linear-gradient(0deg, rgba(144,231,238,1) 0%, rgba(144,231,238,1) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+
 </style>
 
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <nav class="navbar navbar-expand-lg ">
+      
         <div class="container-fluid">
-          <a class="navbar-brand">Oguis, Adam Russel Shane P. (Case Study #1) <span id="username"></span></a> 
-          <button type="button" id="logout" name="logout" class="btn btn-secondary active">Logout</button>
-          </div></nav>
           
-          <button class="save">Save</button>
+          <a class="navbar-brand" style="color: black; text-shadow: 1px 1px #ffffff;">Oguis, Adam  (Case Study #1) |<span id="username"></span></a> 
+
+          <button type="button" id="logout" name="logout" class="btn btn-secondary active" style="text-shadow: 1px 1px #000000;">Logout</button>
+          </div></nav>
+
+    
+          
+          <div class="card">
+            <div class="card-body success">
+              <h3 class="card-title" style="text-shadow: 2px 2px #ffffff;">COVID Patients</h3><br>
+              <a href="visual.html" class="btn btn-info">Data Graphs </a> <br>
+
+              <br>
+              <table id="myTable" class="table table-light table-striped table-bordered table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Patient No.</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Sex (Male/Female)</th>
+                    <th>City</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+                  
           <br>
 
-</body>
-</html>
+          
+<!-- Create the modal markup -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel">Update Patient Data</h5>
+        <button type="button" class="close" onclick="closeModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="updateForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="updateName" name="name" required>
+          </div><br>
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" class="form-control" id="updateAge" name="age" required>
+          </div><br>
+          <div class="form-group">
+            <label for="sex">Sex</label>
+            <select class="form-control" id="updateSex" name="sex" required>
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div><br>
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="updateCity" name="city" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button type="submit" class="btn btn-primary" id="updateBtn">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-<script type="module">
+</body>
+</html>   
+
+<script type = "module">
 
  // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, query, getDocs, getDoc,updateDoc, setDoc, doc, onSnapshot, deleteDoc, orderBy } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js';
 
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
     
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
+const firebaseConfig = {
         apiKey: "AIzaSyDgcNdax5aV8EVk9hhpSeqyk0100brXrFM",
         authDomain: "oguisadam-lab.firebaseapp.com",
         projectId: "oguisadam-lab",
@@ -70,16 +209,169 @@
     };
 
     // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth();
-console.log(app);
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    // const auth = getAuth();
+    console.log(app)
 
-    
+//DataTables
+firebase.initializeApp(firebaseConfig);
+const db2 = firebase.firestore();
+
+//logout function 
 const logoutBtn = document.querySelector("#logout");
 logoutBtn.addEventListener("click", ()=>{
 window.location.replace("index.html");
 });
 
+ //getting all the data
+
+ // Get the data from Firestore and add it to the DataTable
+db2.collection("covid")
+  .onSnapshot((querySnapshot) => {
+	let counter = 1; // initialize counter variable
+    const table = $("#myTable").DataTable(); // cache DataTable instance
+    table.clear(); // clear existing data in the table
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+
+      //button for delete and update
+
+      const updateButton = `<button type="button" class="btn btn-success btn-sm update" data-toggle="modal" data-target="#updateModal" data-id="${doc.id}">📝</button>`
+
+      const deleteButton = `<button type="button" class="btn btn-danger btn-sm delete" data-id="${doc.id}">✖️</button>`;
+      
+
+      // Add data to DataTable row
+      table.row
+        .add([
+          counter++, 
+          data["name"], 
+          data["age"],
+          data["sex"],
+          data["city"],
+          `${updateButton}
+          ${deleteButton}`
+        ])
+        .draw();
+    });
+  });
+
+//Delete Function
+$(document).on("click", ".delete", function() {
+  const docId = $(this).data("id"); // get the document ID from the data attribute
+  const collectionName = "covid"; // replace with your collection name
+  const docRef = db2.collection(collectionName).doc(docId); // get the document reference
+  docRef.delete().then(() => {
+    swal({
+      title: "Success!",
+      text: "Deleted Succesfully",
+      icon: "success",
+      button: "OK",
+    }).then(() => {
+      console.log()
+    });
+  }).catch((error) => {
+    console.error("Error removing document: ", error);
+  });
+});
+
+// Update Function
+$(document).on("click", ".update", function () {
+  const docId = $(this).data("id"); // get the document ID from the data attribute
+  const collectionName = "covid"; // replace with your collection name
+  const docRef = db2.collection(collectionName).doc(docId); // get the document reference
+
+  // Get the current data from Firestore
+  docRef
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+
+        // Populate the modal with the current data
+        $("#updateName").val(data.name);
+        $("#updateAge").val(data.age);
+        $("#updateSex").val(data.sex);
+        $("#updateCity").val(data.city);
+
+        // Open the modal
+        $("#updateModal").modal("show");
+
+        // Update the data on submit
+        $("#updateForm").submit(function (event) {
+          event.preventDefault();
+
+          // Get the updated data from the form
+          const updatedData = {
+            name: $("#updateName").val(),
+            age: $("#updateAge").val(),
+            sex: $("#updateSex").val(),
+            city: $("#updateCity").val(),
+          };
+
+          // Update the data in Firestore
+
+          docRef
+            .update(updatedData)
+            .then(() => {
+              // Display a success message
+              swal({
+                title: "Success!",
+                text: "Updated Successfully",
+                icon: "success",
+                button: "OK",
+              }).then(() => {
+                // Close the modal
+                $("#updateModal").modal("hide");
+              });
+            })
+            .catch((error) => {
+              console.error("Error updating document: ", error);
+            });
+        });
+      } else {
+        console.log("No such document!");
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
+});
+
+
+
+</script>
+
+<script>
+
+ // Function to close the modal
+ function closeModal() {
+    $("#updateModal").modal("hide");
+  }
+
+  // Event listener to detect when the modal is closed
+  $("#updateModal").on("hidden.bs.modal", function () {
+    // Reset the form
+    $("#updateForm")[0].reset();
+  });
+
+$(document).ready(function() {
+    $('#myTable').dataTable({
+      "columns": [
+    { "width": "7%" },
+    { "width": "25%" },
+    { "width": "10%" },
+    { "width": "20%" },
+    { "width": "20%" },
+    { "width": "7%" },
+    
+  ],
+
+        "paging": true,
+        "searching": true,
+        "lengthMenu":[[10,5],[10,5]]
+    });
+});
 
 </script>

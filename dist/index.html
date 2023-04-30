@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oguis, Adam</title>
+    <title>Oguis, Adam Russel Shane</title>
     <script defer src="./bundle.js"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,84 +19,73 @@
 <style>
 
   body  {
-  	background-image: url("pangwall.jpg");
-	height: 100vh;
+  background-image: url("covid.jpg");
+	height: 60vh;
 	background-position: center;
  	background-repeat: no-repeat;
-  	background-size: cover;
+  background-size: cover;
 	}
 
 #box{
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 70%;
     transform: translate(-50%, -50%);
     margin: 0 auto;
-    background-color: rgb(233, 218, 150);
+
     width: 300px;
     padding: 20px;
-    box-shadow: 30px 30px 300px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-   }
 
-   .google-sign-in {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffff;
-  border: 2px solid #ffff;
-  color: #4285F4;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 10px;
-  border-radius: 1px;
-}
+    color: black;
 
-.google-sign-in img {
-  height: 20px;
-  margin-right: 0.1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border:1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
+   
+h1 {
+  -webkit-text-stroke: 2px #f0fff0;
+  font-size: 65px;
+  text-shadow: 5px 5px #000000;
+}
+h3 {
+  	-webkit-text-stroke: 1.3px  #f0fff0;
+    text-shadow: 4px 4px #000000;
+	}
+h5 {
+  	-webkit-text-stroke: 1.3px  #f0fff0;
+    text-shadow: 3px 3px #000000;
+	}
 
-.google-sign-in:hover {
-  background-color: rgb(233, 218, 150);
-  color: rgb(233, 218, 150);
-}
-
-.icon {
-  margin-right: 10px;
-}
-.icon i {
-  font-size: 20px;
-  color: #4285F4;
-}
 </style>
 
-<body>
 
+  
+  <h1 style="color:white; margin-top: 200px; margin-left: 200px;"><b> Covid Patient List</b> </h1>
+  <h3 style="color:white; margin-left: 370px;"><b> (Philippines)</b> </h3>
+  <h5 style="color:white; margin-left: 300px;">Oguis, Adam Russel (Case Study 1)</h5>
     <div id ="box">
         <form name="login_form" id="login_form" method="post" action="#" enctype="multipart/form-data" >
-            <div style="font-size: 20px;margin: 0px;color: black;"><b>Login Here</b></div><br>
+            <div style="font-size: 20px;margin: 0px;color: white; text-shadow: 2px 2px #000000;"><b>Login Here</b></div><br>
               <div class="form-group">
-                <label for="email"><b>Email: </b></label>
+                <label for="email" style="color: white; text-shadow: 2px 2px #000000;" ><b>Email: </b></label>
                 <input type="text" name="login_email" id="login_email" class="form-control" placeholder="Enter your email"><br>
               </div>
               
               <div class="form-group">
-                <label for="password"><b>Password: </b></label>
+                <label for="password" style="color: white; text-shadow: 2px 2px #000000;"><b>Password: </b></label>
                 <input type="password" name="login_password" id="login_password" class="form-control"  placeholder="Enter your password"><br>
               </div>
-              <button type="button" id="login" name="login" class="btn btn-success">Login</button>
+              <button type="button" id="login" name="login" class="btn btn-success" style="text-shadow: 1px 1px #000000;">Login</button>
               <br>
               </form>
-_______________________________________
-              <div>
-                Login with:<button class = "google-sign-in"><img src="google-logo.png" alt="Google Logo" /> </button></div>
-_______________________________________ 
+<a style="color: white">_______________________________________ </a>
 <br><br>
-                <a style = "color: black" href="register.html">Click here to register ← </a>
+<a style="color: white; text-shadow: 1px 1px #000000;" href="register.html" onmouseover="this.style.color='#000000';" onmouseout="this.style.color='white';">Click here to register ← </a>
+
     
     </div>
 </body>
@@ -108,7 +99,7 @@ _______________________________________
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
-    
+
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
@@ -129,25 +120,30 @@ _______________________________________
     
     
     //----- Login code start	  
+
     document.getElementById("login").addEventListener("click", function() {
-      var email =  document.getElementById("login_email").value;
-      var password = document.getElementById("login_password").value;
-    
-      signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        console.log(user);
-        alert(user.email+" \n \n Login successful !");
-        window.location.replace("home.html");
-       
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-        alert(errorMessage);
-      });		  		  
+  var email =  document.getElementById("login_email").value;
+  var password = document.getElementById("login_password").value;
+
+  signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user);
+    swal({
+      title: "Success!",
+      text: user.email+" \n \n Login successful !",
+      icon: "success",
+      button: "OK",
+    }).then(() => {
+      window.location.replace("home.html");
     });
-    //----- End
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage);
+    swal("Error", errorMessage, "error");
+  });		  		  
+});
     </script>

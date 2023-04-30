@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Oguis, Adam</title>
+    <title>Oguis, Adam Russel Shane</title>
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,31 +14,38 @@
   
   <script defer src="./bundle.js"></script>
 
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
   <style>
-   #box{
+#box{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0 auto;
-    background-color: rgb(233, 218, 150);
+
     width: 300px;
     padding: 20px;
-    box-shadow: 30px 30px 300px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-   }
 
-   body  {
-  	background-image: url("pangwall.jpg");
-		height: 100vh;
-		background-position: center;
- 		background-repeat: no-repeat;
-  	background-size: cover;
+    color: black;
+
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border:1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+body  {
+  background-image: url("covid.jpg");
+	height: 100vh;
+	background-position: center;
+ 	background-repeat: no-repeat;
+  background-size: cover;
 	}
-   </style>
+
+</style>
 
 <link rel="shortcut icon" type="x-icon" href="sml.png">
 
@@ -50,25 +57,25 @@
             <br>
                <div id = "box">
                 <form name="registration_form" id="registration_form" method="post" action="#" enctype="multipart/form-data" >
-                  <div style="font-size: 20px;margin: 0px;color: black;"><b>Register Here</b></div><br>
-                  <div style="font-size: 20px;margin: 0px;color: black;"><b>(Input your Information)</b></div><br>
+                  <div style="font-size: 20px;margin: 0px;color: white; text-shadow: 2px 2px #000000;"><b>Register Here</b></div><br>
+                  <div style="font-size: 20px;margin: 0px;color: white; text-shadow: 2px 2px #000000;"><b>Input your Information</b></div><br>
                     <div class="form-group">
-                      <label for="email"><b>Email: </b></label>
-                      <input type="text" name="email" id="email" class="form-control" placeholder="Enter your email"><br>
+                      <label for="email" style="color: white; text-shadow: 2px 2px #000000;"><b>Email: </b></label>
+                      <input type="text" name="email" id="email" class="form-control" placeholder="Enter your email" ><br>
                     </div>
                     
                     <div class="form-group">
-                      <label for="password"><b>Password: </b></label>
+                      <label for="password" style="color: white; text-shadow: 2px 2px #000000;"><b>Password: </b></label>
                       <input type="password" name="password" id="password" class="form-control"  placeholder="Enter your password"><br>
                     </div>
-                    <button type="button" id="register" name="register" class="btn btn-success">Register</button>
+                    <button type="button" id="register" name="register" class="btn btn-success" style="color: white; text-shadow: 1px 1px #000000;">Register</button>
                     <br>
                 </form>
 
-_______________________________________
+<a style="color: white">_______________________________________</a>
 <br><br>
 
-                    <a style = "color: black" href="index.html">Click here to Login ← </a>
+                    <a style="color: white; text-shadow: 1px 1px #000000;" href="index.html" onmouseover="this.style.color='#000000';" onmouseout="this.style.color='white';">Click here to Login ← </a>
                 </div>
       
               
@@ -114,8 +121,14 @@ document.getElementById("register").addEventListener("click", function() {
     // Signed in 
     const user = userCredential.user;
     console.log(user);
-    alert("Registration successful !!!");
-    window.location.href = "index.html";
+    swal({
+      title: "Success!",
+      text: "Account Created !",
+      icon: "success",
+      button: "OK",
+    }).then(() => {
+      window.location.replace("index.html");
+    });
     // ...
   })
   .catch((error) => {
@@ -123,7 +136,7 @@ document.getElementById("register").addEventListener("click", function() {
     const errorMessage = error.message;
     // ..
     console.log(errorMessage);
-    alert(error);
+    swal("Error", errorMessage, "error");
   });		  		  
 });
 //----- End
