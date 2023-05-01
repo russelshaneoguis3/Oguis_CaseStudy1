@@ -34,7 +34,7 @@
     
 </head>
 
-<link rel="shortcut icon" type="x-icon" href="sml.png">
+<link rel="shortcut icon" type="x-icon" href="golo.png">
 
 <style>
 
@@ -60,6 +60,30 @@ body {
   color: #fff;
   background-color: #dc3545;
   border-color: #dc3545;
+}
+
+#data:hover {
+  color: #000000;
+  background-color: #29fa6e;
+  border-color: #29fa6e;
+}
+
+#add:hover {
+  color: #000000;
+  background-color: #29fa6e;
+  border-color: #29fa6e;
+}
+
+#cancelUpdate:hover {
+  color: #000000;
+  background-color: #29fa6e;
+  border-color: #29fa6e;
+}
+
+#updateBtn:hover {
+  color: #000000;
+  background-color: #29fa6e;
+  border-color: #29fa6e;
 }
 
 th {
@@ -108,7 +132,7 @@ tbody {
           
           <a class="navbar-brand" style="color: black; text-shadow: 1px 1px #ffffff;">Oguis, Adam  (Case Study #1) |<span id="username"></span></a> 
 
-          <button type="button" id="logout" name="logout" class="btn btn-secondary active" style="text-shadow: 1px 1px #000000;">Logout</button>
+          <button type="button" id="logout" name="logout" class="btn btn-secondary active" style="text-shadow: 1px 1px #000000; box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">Logout</button>
           </div></nav>
 
     
@@ -116,7 +140,9 @@ tbody {
           <div class="card">
             <div class="card-body success">
               <h3 class="card-title" style="text-shadow: 2px 2px #ffffff;">COVID Patients</h3><br>
-              <a href="visual.html" class="btn btn-info">Data Graphs </a> <br>
+              <a href="visual.html" class="btn btn-info" id="data" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">📈Data Graphs </a> &nbsp;
+              <a href="addpatient.html" class="btn btn-primary" id="add" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">➕Add Patient </a>
+              <br>
 
               <br>
               <table id="myTable" class="table table-light table-striped table-bordered table-hover">
@@ -173,8 +199,8 @@ tbody {
             <input type="text" class="form-control" id="updateCity" name="city" required>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
-            <button type="submit" class="btn btn-primary" id="updateBtn">Update</button>
+            <button type="button" class="btn btn-danger" id="cancelUpdate" onclick="closeModal()" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">✖️Cancel</button>
+            <button type="submit" class="btn btn-success" id="updateBtn" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">📝Update</button>
           </div>
         </form>
       </div>
@@ -237,9 +263,9 @@ db2.collection("covid")
 
       //button for delete and update
 
-      const updateButton = `<button type="button" class="btn btn-success btn-sm update" data-toggle="modal" data-target="#updateModal" data-id="${doc.id}">📝</button>`
+      const updateButton = `<button type="button" class="btn btn-success btn-sm update" data-toggle="modal" data-target="#updateModal" data-id="${doc.id}" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">📝</button>`
 
-      const deleteButton = `<button type="button" class="btn btn-danger btn-sm delete" data-id="${doc.id}">✖️</button>`;
+      const deleteButton = `<button type="button" class="btn btn-danger btn-sm delete" data-id="${doc.id}" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">✖️</button>`;
       
 
       // Add data to DataTable row
@@ -257,22 +283,35 @@ db2.collection("covid")
     });
   });
 
-//Delete Function
-$(document).on("click", ".delete", function() {
+  //Delete FUnction
+
+  $(document).on("click", ".delete", function() {
   const docId = $(this).data("id"); // get the document ID from the data attribute
   const collectionName = "covid"; // replace with your collection name
   const docRef = db2.collection(collectionName).doc(docId); // get the document reference
-  docRef.delete().then(() => {
-    swal({
-      title: "Success!",
-      text: "Deleted Succesfully",
-      icon: "success",
-      button: "OK",
-    }).then(() => {
-      console.log()
-    });
-  }).catch((error) => {
-    console.error("Error removing document: ", error);
+
+  // show SweetAlert modal for confirmation
+  swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this document!",
+    icon: "warning",
+    buttons: ["Cancel", "Delete"],
+    dangerMode: true,
+  }).then((willDelete) => {
+    if (willDelete) {
+      docRef.delete().then(() => {
+        swal({
+          title: "Success!",
+          text: "Deleted Succesfully",
+          icon: "success",
+          button: "OK",
+        }).then(() => {
+          console.log()
+        });
+      }).catch((error) => {
+        console.error("Error removing document: ", error);
+      });
+    }
   });
 });
 
@@ -310,25 +349,46 @@ $(document).on("click", ".update", function () {
             city: $("#updateCity").val(),
           };
 
-          // Update the data in Firestore
-
-          docRef
-            .update(updatedData)
-            .then(() => {
-              // Display a success message
-              swal({
-                title: "Success!",
-                text: "Updated Successfully",
-                icon: "success",
-                button: "OK",
-              }).then(() => {
-                // Close the modal
-                $("#updateModal").modal("hide");
-              });
-            })
-            .catch((error) => {
-              console.error("Error updating document: ", error);
+          // Check if the updated data is the same as the current data
+          if (
+            updatedData.name === data.name &&
+            updatedData.age === data.age &&
+            updatedData.sex === data.sex &&
+            updatedData.city === data.city
+          ) {
+            // Display a warning message
+            swal({
+              title: "Warning!",
+              text: "No changes were made",
+              icon: "warning",
+              button: "OK",
+            }).then(() => {
+              // Close the modal
+              $("#updateModal").modal("hide");
             });
+          } else {
+            // Update the data in Firestore
+            docRef
+              .set(updatedData)
+              .then(() => {
+                // Display a success message
+                swal({
+                  title: "Success!",
+                  text: "Updated Successfully",
+                  icon: "success",
+                  button: "OK",
+                }).then(() => {
+                  // Close the modal
+                  $("#updateModal").modal("hide");
+
+                 window.location.href = 'home.html';
+                    
+                });
+              })
+              .catch((error) => {
+                console.error("Error updating document: ", error);
+              });
+          }
         });
       } else {
         console.log("No such document!");
@@ -338,7 +398,6 @@ $(document).on("click", ".update", function () {
       console.log("Error getting document:", error);
     });
 });
-
 
 
 </script>
@@ -352,6 +411,7 @@ $(document).on("click", ".update", function () {
 
   // Event listener to detect when the modal is closed
   $("#updateModal").on("hidden.bs.modal", function () {
+
     // Reset the form
     $("#updateForm")[0].reset();
   });

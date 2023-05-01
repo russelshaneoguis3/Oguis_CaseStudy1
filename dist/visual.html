@@ -29,7 +29,7 @@
 
 </head>
 
-<link rel="shortcut icon" type="x-icon" href="sml.png">
+<link rel="shortcut icon" type="x-icon" href="golo.png">
 
 <style>
 
@@ -215,11 +215,18 @@ new Chart(ltx, {
   type: 'line',
   data: {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [{
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      borderWidth: 3
-    }]
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 3
+      },
+      {
+        label: '# of Clicks',
+        data: [6, 10, 5, 8, 12, 15],
+        borderWidth: 3
+      }
+    ]
   },
   options: {
     animations: {

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oguis, Adam Russel Shane</title>
+    <script defer src="./bundle.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+
+      <!-- sweetalert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+    
+
+<!-- Data From Firebase to DataTables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    
+</head>
+
+<link rel="shortcut icon" type="x-icon" href="golo.png">
+
+<style>
+
+body {
+  background-image: url("cornbeef19.jpg");
+	height: 115vh;
+	background-position: center;
+ 	background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+}
+
+
+.btn-secondary.active,
+.btn-secondary:active,
+.open > .dropdown-toggle.btn-secondary {
+  color: #ffff;
+  background-color: #6c757d ;
+  border-color: #6c757d ;
+}
+#logout:hover {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+#addHome:hover {
+  color: #000000;
+  background-color: #29fa6e;
+  border-color: #29fa6e;
+}
+
+#addBtn:hover {
+  color: #000000;
+  background-color: #29fa6e;
+  border-color: #29fa6e;
+}
+
+#confirmAdd:hover {
+  color: #000000;
+  background-color: #29fa6e;
+  border-color: #29fa6e;
+}
+
+#cancelAdd:hover {
+  color: #000000;
+  background-color: #29fa6e;
+  border-color: #29fa6e;
+}
+
+th {
+      background-color: #eac2f1;
+      color: #000000;
+      text-transform: uppercase;
+      padding: 10px;
+      text-align: left;
+  }
+
+tbody {
+    background-color: #f8f9fa;
+}
+
+.card {
+
+    width: 500px;
+    height: 590px;
+    margin: 20px auto;
+  
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border:1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.navbar {
+  background: rgb(144,231,238);
+  background: linear-gradient(0deg, rgba(144,231,238,1) 0%, rgba(144,231,238,1) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+
+</style>
+
+
+<body>
+
+    <nav class="navbar navbar-expand-lg ">
+      
+        <div class="container-fluid">
+          
+          <a class="navbar-brand" style="color: black; text-shadow: 1px 1px #ffffff;">Oguis, Adam  (Case Study #1) |<span id="username"></span></a> 
+
+          <button type="button" id="logout" name="logout" class="btn btn-secondary active" style="text-shadow: 1px 1px #000000; box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);" >Logout</button>
+          </div></nav>
+          <div class="card">
+            <div class="card-body success">
+
+              <a href="home.html" class="btn btn-info" id="addHome" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);"> 🡰 Home </a><br><br>
+
+              <h3 class="card-title" style="text-shadow: 2px 2px #ffffff;"><center>Registration Form</center></h3>
+
+               <center><h5>Input the patient information</h5></center><br>
+
+              <form id="addForm">
+                <div class="form-group">
+                  <label for="name"><b>Name</b></label>
+                  <input type="text" class="form-control" id="name" name="name" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);" required>
+                </div><br>
+                <div class="form-group">
+                  <label for="age"><b>Age</b></label>
+                  <input type="number" class="form-control" id="age" name="age" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);" required>
+                </div><br>
+                <div class="form-group">
+                  <label for="sex"><b>Sex</b></label>
+                  <select class="form-control" id="sex" name="sex" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div><br>
+                <div class="form-group">
+                  <label for="city"><b>City</b></label>
+                  <input type="text" class="form-control" id="city" name="city" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);" required>
+                </div><br>
+                <button type="submit" class="btn btn-success addBtn" id="addBtn" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">➕Add Patient</button>
+              </form>
+
+
+
+</body>
+</html>   
+
+<script type = "module">
+
+ // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, query, getDocs, getDoc,updateDoc, setDoc, doc, onSnapshot, deleteDoc, orderBy } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js';
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+        apiKey: "AIzaSyDgcNdax5aV8EVk9hhpSeqyk0100brXrFM",
+        authDomain: "oguisadam-lab.firebaseapp.com",
+        projectId: "oguisadam-lab",
+        storageBucket: "oguisadam-lab.appspot.com",
+        messagingSenderId: "47320592417",
+        appId: "1:47320592417:web:1e871ea30b701c29e03360",
+        measurementId: "G-N8QV73QPNH"
+    };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+// const auth = getAuth();
+console.log(app)
+
+//DataTables
+firebase.initializeApp(firebaseConfig);
+const db2 = firebase.firestore();
+
+//logout function 
+const logoutBtn = document.querySelector("#logout");
+logoutBtn.addEventListener("click", ()=>{
+window.location.replace("index.html");
+});
+
+
+
+//Add function for Adding Patients
+const collectionName = "covid"; 
+
+$("#addForm").submit(function (event) {
+  event.preventDefault();
+
+  // Get the data from the form
+  const data = {
+    name: $("#name").val(),
+    age: $("#age").val(),
+    sex: $("#sex").val(),
+    city: $("#city").val(),
+  };
+
+  // Create the modal
+  const modal = `
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmModalLabel">Confirm Addition</h5>
+            <button type="button" class="close" onclick="closeModal()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to add this patient to the list?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="cancelAdd" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);" onclick="closeModal()">✖️Cancel</button>
+            <button type="button" class="btn btn-success" id="confirmAdd" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">✔Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Add the modal to the page
+  $("body").append(modal);
+
+  // Show the modal
+  $("#confirmModal").modal("show");
+
+  // Handle the confirmation
+  $("#confirmAdd").click(function() {
+    // Add the data to Firestore
+    db2.collection(collectionName)
+      .add(data)
+      .then(() => {
+        // Display a success message
+        swal({
+          title: "Added Successfully!",
+          text: "Patient added to Lists",
+          icon: "success",
+          button: "OK"
+        });
+        // Redirect to home.html after the sweetalert fires, delay for 2 seconds
+      setTimeout(function(){
+      window.location.href = 'home.html';
+    }, 
+    2000); // delay for 2 seconds
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+      });
+
+    // Hide the modal
+    $("#confirmModal").modal("hide");
+  });
+});
+
+</script>
+
+<script>
+ // Function to close the modal
+ function closeModal() {
+    $("#confirmModal").modal("hide");
+  }
+
+  // Event listener to detect when the modal is closed
+  $("#confirmModal").on("hidden.bs.modal", function () {
+
+    // Reset the form
+    $("#confirmModal")[0].reset();
+  });
+
+</script>
