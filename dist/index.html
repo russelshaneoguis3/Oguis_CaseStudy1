@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oguis, Adam Russel Shane</title>
+    <title>COVID-19 | Login</title>
     <script defer src="./bundle.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -20,7 +20,7 @@
 
   body  {
   background-image: url("covid.jpg");
-	height: 60vh;
+	height: 100vh;
 	background-position: center;
  	background-repeat: no-repeat;
   background-size: cover;
@@ -29,21 +29,40 @@
 #box{
     position: absolute;
     top: 50%;
-    left: 70%;
+    left: 550px;
     transform: translate(-50%, -50%);
     margin: 0 auto;
 
     width: 300px;
-    padding: 20px;
+    padding: 15px;
 
     color: black;
 
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     border-radius: 20px;
     border:1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.box2{
+    position: absolute;
+    top: 50%;
+    left: 700px;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+
+    width: 700px;
+    height: 370px;
+    padding: 20px;
+
+    color: black;
+
+ 
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+
 }
 
 #login:hover {
@@ -68,11 +87,11 @@ h5 {
 
 </style>
 
-
-  
-  <h1 style="color:white; margin-top: 200px; margin-left: 200px;"><b> Covid Patient List</b> </h1>
-  <h3 style="color:white; margin-left: 370px;"><b> (Philippines)</b> </h3>
-  <h5 style="color:white; margin-left: 300px;">Oguis, Adam Russel (Case Study 1)</h5>
+<body>
+<div class ="box2">
+  <h1 style="color:white; margin-top: 80px; margin-left: 20px;"><b>COVID-19</b> </h1>
+  <h3 style="color:white; margin-left: 90px;"><b>Patients List</b> </h3>
+ 
     <div id ="box">
         <form name="login_form" id="login_form" method="post" action="#" enctype="multipart/form-data" >
             <div style="font-size: 20px;margin: 0px;color: white; text-shadow: 2px 2px #000000;"><b>Login Here</b></div><br>
@@ -93,6 +112,7 @@ h5 {
 <a style="color: white; text-shadow: 1px 1px #000000;" href="register.html" onmouseover="this.style.color='#000000';" onmouseout="this.style.color='white';">Click here to register ← </a>
 
     
+    </div>
     </div>
 </body>
 </html>

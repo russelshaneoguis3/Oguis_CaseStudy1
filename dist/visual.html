@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oguis, Adam Russel Shane</title>
+    <title>COVID-19 | Graphs/Charts</title>
     <script defer src="./bundle.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
 
 body {
   background-image: url("cornbeef19.jpg");
-	height: 180vh;
+	height: 110vh;
 	background-position: center;
  	background-repeat: no-repeat;
   background-size: cover;
@@ -57,22 +57,17 @@ body {
   border-color: #dc3545;
 }
 
-th {
-      background-color: #eac2f1;
-      color: #000000;
-      text-transform: uppercase;
-      padding: 10px;
-      text-align: left;
-  }
-
-tbody {
-    background-color: #f8f9fa;
+#homie:hover {
+  color: #000000;
+  background-color: #29fa6e;
+  border-color: #29fa6e;
 }
+
 
 .card {
 
     width: 1200px;
-    height: 1000px;
+    height: 600px;
     margin: 20px auto;
   
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
@@ -94,16 +89,11 @@ tbody {
 .chart-container {
   display: flex;
   justify-content: space-between;
-  margin: 120px;
+  margin: 50px;
 }
 
 .chart-container canvas {
-  width: 50%;
-}
-
-#line{
-  max-width:700px;
-  max-height:300px;
+  width: 60%;
 }
 
 #pie{
@@ -127,27 +117,32 @@ tbody {
       
         <div class="container-fluid">
           
-          <a class="navbar-brand" style="color: black; text-shadow: 1px 1px #ffffff;">Oguis, Adam  (Case Study #1) |<span id="username"></span></a> 
+          <a class="navbar-brand" style="color: black; text-shadow: 1px 1px #ffffff;">COVID-19 Patients Monitoring System<span id="username"></span></a> 
 
-          <button type="button" id="logout" name="logout" class="btn btn-secondary active" style="text-shadow: 1px 1px #000000;">Logout</button>
+          <button type="button" id="logout" name="logout" class="btn btn-secondary active" style="text-shadow: 1px 1px #000000; box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">Logout</button>
           </div></nav>
 
     <!-- navbar end -->
           
           <div class="card">
             <div class="card-body success">
-              <h3 class="card-title" style="text-shadow: 2px 2px #ffffff;">COVID Patients Visualization</h3><br>
-              <a href="home.html" class="btn btn-info" > 🡰 Home </a> <br>
+              <h3 class="card-title" style="text-shadow: 2px 2px #ffffff;">COVID Patients Graph/Chart Visualization</h3><br>
+              <a href="home.html" class="btn btn-info" id="homie" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">🡰 Home </a> <br>
 
               <br>
 
-            <!-- chartjs code  -->
-            <!-- line chart -->
-            <center><canvas id="line"></canvas></center>
+            <!-- charts code  -->
+            <div>
+              <h5 style="display: inline-block; margin-left: 120px;">Patients Count Male/Female (Pie Chart)</h5>
+              <h5 style="display: inline-block; margin-left: 160px;">Patients Average Age Male/Female (bar chart)</h5>
+            </div>
 
             <div class="chart-container">
             <!-- pie chart -->
+            <br>
             <canvas id="pie"></canvas>
+            
+            <br>
             <canvas id="bar"></canvas>
             </div>
 
@@ -190,7 +185,6 @@ const firebaseConfig = {
     console.log(app)
 
   //Firestore
-  const db = getFirestore(app);
 
 //DataTables
 firebase.initializeApp(firebaseConfig);
@@ -202,101 +196,95 @@ logoutBtn.addEventListener("click", ()=>{
 window.location.replace("index.html");
 });
 
-   
-</script>
+//charts codes
+//pie chart codes
+// Initialize data array for the chart
+var data = {
+  labels: ['Male Count', 'Female Count'],
+  datasets: [{
+    label: 'Number of Patients',
+    data: [0, 0],
+    borderWidth: 1,
+    backgroundColor: ['#20B2AA', '#DDA0DD']
+  }],
+};
 
-<!-- Script for char.js -->
-<script>
-
-//line chart
-const ltx = document.getElementById('line');
-
-new Chart(ltx, {
-  type: 'line',
-  data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 3
-      },
-      {
-        label: '# of Clicks',
-        data: [6, 10, 5, 8, 12, 15],
-        borderWidth: 3
-      }
-    ]
-  },
-  options: {
-    animations: {
-      tension: {
-        duration: 1000,
-        easing: 'linear',
-        from: 1,
-        to: 0,
-        loop: true
-      }
-    },
-    scales: {
-      y: { // defining min and max so hiding the dataset does not change scale range
-        min: 0,
-        max: 100,
-        beginAtZero: true
-      }
+// Retrieve data from Firestore
+db2.collection("covid").get().then((snapshot) => {
+  snapshot.forEach((doc) => {
+    const gender = doc.data().sex;
+    if (gender === 'male') {
+      data.datasets[0].data[0]++;
+    } else if (gender === 'female') {
+      data.datasets[0].data[1]++;
     }
-  }});
-
-//pie chart
-const ptx = document.getElementById('pie');
-
-new Chart(ptx, {
-  type: 'pie',
-  data: {
-    labels: ['Male', 'Female'],
-    datasets: [{
-      label: 'Number of Patients',
-      data: [12, 19],
-      borderWidth: 1,
-
-    }],
-  },
-  options :{
-    radius: '100%',
-  }
+  });
+  
+// Create pie chart using Chart.js
+  const ptx = document.getElementById('pie');
+  new Chart(ptx, {
+    type: 'pie',
+    data: data,
+    options: {
+      radius: '100%',
+    },
+  });
 });
 
-//bar chart
+// Initialize data array for the chart
+var data2 = {
+  labels: ['Male Average Age', 'Female Average Age'],
+  datasets: [{
+    label: 'Average Age',
+    data: [0, 0],
+    borderWidth: 1,
+    backgroundColor: ['#20B2AA', '#DDA0DD']
+  }],
+};
 
-const btx = document.getElementById('bar');
+// Retrieve data from Firestore
+db2.collection("covid").get().then((snapshot) => {
+  let maleSum = 0;
+  let maleCount = 0;
+  let femaleSum = 0;
+  let femaleCount = 0;
+  
+  snapshot.forEach((doc) => {
+    const gender = doc.data().sex;
+    const age = parseInt(doc.data().age);
+    
+    if (gender === 'male') {
+      maleSum += age;
+      maleCount++;
+    } else if (gender === 'female') {
+      femaleSum += age;
+      femaleCount++;
+    }
+  });
+  
+  const maleAvg = maleCount > 0 ? maleSum / maleCount : 0;
+  const femaleAvg = femaleCount > 0 ? femaleSum / femaleCount : 0;
+  
+  // Update data array with average age
+  data2.datasets[0].data[0] = maleAvg;
+  data2.datasets[0].data[1] = femaleAvg;
+  
+  // Create bar chart using Chart.js
+  const btx = document.getElementById('bar');
+  new Chart(btx, {
+    type: 'bar',
+    data: data2,
+    options: {
 
-new Chart(btx, {
-  type: 'bar',
-  data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [{
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    animations: {
-      tension: {
-        duration: 1000,
-        easing: 'linear',
-        from: 1,
-        to: 0,
-        loop: true
-      }
-    },
-    scales: {
-      y: { // defining min and max so hiding the dataset does not change scale range
-        min: 0,
-        max: 100,
-        beginAtZero: true
+      scales: {
+        yAxes: [{
+          ticks: {     
+            beginAtZero: true,
+          }
+        }]
       }
     }
-  }});
+  });
+});
 
 </script>
