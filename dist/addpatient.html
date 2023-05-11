@@ -260,7 +260,7 @@ $("#addForm").submit(function (event) {
   $("#confirmAdd").click(function() {
     // Add the data to Firestore
     db2.collection(collectionName)
-      .add(data)
+      .add(data, { merge: true })
       .then(() => {
         // Display a success message
         swal({

@@ -369,7 +369,7 @@ $(document).on("click", ".update", function () {
           } else {
             // Update the data in Firestore
             docRef
-              .set(updatedData)
+              .set(updatedData, { merge: true })
               .then(() => {
                 // Display a success message
                 swal({
